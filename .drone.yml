@@ -8,11 +8,16 @@ platform:
   arch: arm64
 
 steps:
+- name: get-version
+  image: debian:buster-slim
+  commands:
+  - "apt-get update"
+  - "APPVERSION=$(apt-cache policy isc-dhcp-server | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1 | tr -d '\n')"
+  - "echo $APPVERSION,latest > .tags"
 - name: build
   image: plugins/docker
   settings:
     dockerfile: Dockerfile
-    tags: 1.0-linux-arm64
     repo: linutux/dhcpd
     username:
       from_secret: docker_username
@@ -24,70 +29,8 @@ trigger:
   - master
   event:
   - push
-
----
-kind: pipeline
-type: docker
-name: default-amd64
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: build
-  image: plugins/docker
-  settings:
-    dockerfile: Dockerfile
-    tags: 1.0-linux-amd64
-    repo: linutux/dhcpd
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-
-trigger:
-  branch:
-  - master
-  event:
-  - push
----
-kind: pipeline
-type: docker
-name: manifest
-
-steps:
-- name: manifest
-  image: plugins/manifest
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    target: linutux/dhcpd:1.0
-    template: linutux/dhcpd:1.0-OS-ARCH
-    platforms:
-      - linux/arm64
-      - linux/amd64
-
-- name: manifest-latest
-  image: plugins/manifest
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    target: linutux/dhcpd:latest
-    template: linutux/dhcpd:1.0-OS-ARCH
-    platforms:
-      - linux/arm64
-      - linux/amd64
-
-depends_on:
-- default-arm64
-- default-amd64
 ---
 kind: signature
-hmac: 579c9169080bee41f066ca08ec0a10c49cc2380f5d20111d43e1d17b95142be0
+hmac: fe480426ea76c57ddb72e55d5625e3a9705d40252ecbd23f672c8c0cb29eb0a3
 
 ...
