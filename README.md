@@ -1,1 +1,1 @@
-[![Build Status](https://cloud.drone.io/api/badges/Linutux42/docker-dhcpd/status.svg)](https://cloud.drone.io/Linutux42/docker-dhcpd)
+[![Docker Repository on Quay](https://quay.io/repository/linutux/dhcpd/status "Docker Repository on Quay")](https://quay.io/repository/linutux/dhcpd)
