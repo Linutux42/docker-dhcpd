@@ -1,1 +1,1 @@
-[![Docker Repository on Quay](https://quay.io/repository/linutux/dhcpd/status "Docker Repository on Quay")](https://quay.io/repository/linutux/dhcpd)
+[![Build/Publish Image](https://github.com/Linutux42/docker-dhcpd/actions/workflows/build_push.yml/badge.svg?branch=main)](https://github.com/Linutux42/docker-dhcpd/actions/workflows/build_push.yml)
