@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:stable-slim
 
 # hadolint ignore=DL3008
 RUN apt-get update \
